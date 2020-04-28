@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <base href="/">
     <meta charset="utf-8">
@@ -60,8 +60,11 @@
 
     <!-- import css -->
     <link rel="stylesheet" href="./src/css/index.css">
+    <link rel="stylesheet" href="./src/css/timeline.css">
+    <link rel="stylesheet" href="./src/css/carousel.css">
     <link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 576px)' href='./src/css/mobile.css' />
     <!-- <link rel='stylesheet' media='screen and (min-width: 577px)' href='/stylesheets/css/large.css' /> -->
+    <link rel="stylesheet" href="https://files.rajchandra.me/css/common.css">
 
     <!-- import bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -124,7 +127,7 @@
             </div>
 
             <!-- navbar -->
-            <nav class="col-sm-12 navbar fixed-bottom navbar-expand-sm navbar-light bg-light">
+            <nav class="col-sm-12 navbar fixed-bottom navbar-expand-md navbar-light bg-light">
                 <a class="navbar-brand" href="#">
                     <img src="./src/images/icons/icon-512x512.png" width="40" height="40" class="d-inline-block align-top rounded refresh_stats" alt="coronavirus awareness campaign logo">
                 </a>
@@ -152,10 +155,10 @@
                             <a class="nav-link translate-gg" href="#gg">Government Guidelines</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link translate-news" href="#news-section">News</a>
+                            <a class="nav-link translate-donate" href="#ds">Donate</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link translate-donate" href="#ds">Donate</a>
+                            <a class="nav-link translate-news" href="#news-section">News</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link translate-ss" href="#ss">Say Something!</a>
@@ -192,14 +195,20 @@
                     <thead class="bg-dark text-white">
                         <tr>
                             <th scope="col" class="translate-state">State</th>
-                            <th scope="col" class="translate-indians">Indians</th>
-                            <th scope="col" class="translate-foreigners">Foreigners</th>
-                            <th scope="col" class="translate-deaths">Deaths</th>
+                            <th scope="col" class="translate-table-head-cases">Total Cases</th>
+                            <th scope="col" class="translate-table-head-deaths">Total Deaths</th>
+                            <th scope="col" class="translate-table-head-active">Active cases</th>
                         </tr>
                     </thead>
                     <tbody class="indian-stats-tbody">
                     </tbody>
                 </table>
+            </div>
+            <!-- district-map -->
+            <div class="d-flex justify-content-center p-3 col-lg-12 bg-wet-asphalt">
+                <a href='./src/districtMap/districtMap.html' class="m-4 btn btn-light">
+                    <span id="district-cta" class="">अपने जिले के बारे में अपडेट देखने के लिए यहां क्लिक करें</span>
+                </a>
             </div>
 
             <!-- Indian timeline -->
@@ -208,8 +217,25 @@
             <div class="row col-lg-12 country-timeline-container bg-clouds no-margin no-padding">
                 <figure class="col-lg-12 highcharts-figure">
                     <div id="country-timeline"></div>
-                    <p class="highcharts-description country-timeline-description text-center pt-2 translate-country-timeline-description">
-                    </p>
+                    <p><!-- select a language -->
+                        <div class="col-xs-4 col-sm-6 col-md-4 col-lg-2 p-2 float-right">
+                            <div class="input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                <label class="input-group-text" for="choose-range"><span class="translate-range-label">Range</span></label>
+                                </div>
+                                <select class="custom-select" id="choose-range">
+                                    <option value ="3" selected>3 Days</option>
+                                    <option value="7">7 Days</option>
+                                    <option value="14">14 Days</option>
+                                    <option value="30">30 Days</option>
+                                    <option value="45">45 Days</option>
+                                    <option value="60">60 Days</option>
+                                    <option id="max-range" value="90">90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="highcharts-description country-timeline-description text-center pt-2 translate-country-timeline-description">
+                        </div></p>
                 </figure>
             </div>
             
@@ -231,7 +257,7 @@
                     <div class="text-container text-large country-status-total-deaths"></div>
                     <div class="text-container text-small translate-country-status-total-deaths">अब तक कुल मौतें</div>
                 </div>
-                <div class="col-xs-3 content-container ">
+                <div class="col-xs-3 content-container hidden">
                     <div class="emoji-container emoji-small">🤕</div>
                     <div class="text-container text-large country-status-total-serious"></div>
                     <div class="text-container text-small translate-country-status-total-serious">कुल गंभीर मामले</div>
@@ -251,7 +277,7 @@
                     <div class="text-container text-large country-status-total-recovered"></div>
                     <div class="text-container text-small translate-country-status-total-recovered">कुल स्वस्थ हो चुके मरीज</div>
                 </div>
-                <div class="col-xs-3 content-container ">
+                <div class="col-xs-3 content-container hidden">
                     <div class="emoji-container emoji-small">🤢</div>
                     <div class="text-container text-large country-status-total-unresolved"></div>
                     <div class="text-container text-small translate-country-status-total-unresolved">कुल अनसुलझे मामले</div>
@@ -326,14 +352,15 @@
                     </tbody>
                 </table>
             </div>
-            
+
+
             <!-- do's and dont's based on language -->
             <div class="col-lg-12 header bg-clouds" id="gg"><span class="translate-gg"> </span></div>
             <div class="row col-lg-12 p-2 text-left justify-content-between">
                 <div class="col-lg-5 item-bordered-odd mt-2">
                     <p>
                         Helpline Number Toll free: 
-                        <ul>
+                        <ul  class="pl-5">
                             <li><a href="tel:+1075">1075</a></li>
                             <li><a href="tel:+91-11-23978046">+91-11-23978046</a></li>
                         </ul>
@@ -342,14 +369,11 @@
                 <div class="col-lg-5 item-bordered-even mt-2">
                     <p>
                         Helpline Email ID :
-                        <ul>
+                        <ul  class="pl-5">
                             <li><a href="mailto:ncov2019@gov.in">ncov2019@gov.in</a></li>
                             <li><a href="mailto:ncov2019@gmail.com">ncov2019@gmail.com</a></li>
                         </ul>
                     </p>
-                </div>
-                <div class="col-lg-12 item-bordered-odd mt-2">
-                    <a href="https://www.mohfw.gov.in/pdf/DistrictWiseList324.pdf" target="_blank">Download List of Districts reporting COVID-19 cases</a>
                 </div>
                 <div class="col-lg-12 item-bordered-even mt-2">
                     <a href="https://www.mohfw.gov.in/pdf/FAQ.pdf" target="_blank">Download Frequently Asked Questions (FAQs)</a>
@@ -391,7 +415,7 @@
             <div class="col-lg-12 text-left">
                 <div class="col-lg-12 p-2">
                     <p>Citizens and organisations can go to the website pmindia.gov.in and donate to PM CARES Fund using following details:</p>
-                    <ul>
+                    <ul  class="pl-5">
                         <li class="no-decore">Name of the Account: PM CARES</li>
                         <li class="no-decore">Account Number: 2121PM20202 </li>
                         <li class="no-decore">IFSC Code: SBIN0000691</li>
@@ -401,7 +425,7 @@
                     </ul>
                     <p>
                         Following modes of payments are available on the website pmindia.gov.in -
-                        <ul>
+                        <ul  class="pl-5">
                             <li>Debit Cards and Credit Cards</li>
                             <li>Internet Banking</li>
                             <li>UPI (BHIM, PhonePe, Amazon Pay, Google Pay, PayTM, Mobikwik, etc.)</li>
@@ -421,6 +445,16 @@
                     </ul>
                 </div>
             </div>
+            <div class="col-md-2 bg-secondary"></div>
+            <div class="col-md-8 row d-flex justify-content-center align-items-center bg-secondary"  style="height: auto;width: 100%;">
+                <div class="col-lg-6 col-md-6 col-sm-10 col-10 mb-2 mt-2" style="height: 400px;overflow-y: auto;">
+                    <a class="twitter-timeline mt-2 mb-2" href="https://twitter.com/PTI_News?ref_src=twsrc%5Etfw">Tweets by PTI_News</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-10 col-10 mb-2 mt-2" style="height: 400px;overflow-y: auto;">
+                    <a class="twitter-timeline mt-2 mb-2" href="https://twitter.com/WFNhindi?ref_src=twsrc%5Etfw">Tweets by WFNhindi</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+            <div class="col-md-2 bg-secondary"></div>
         
             <!-- who guidelines -->
             <div class="col-lg-12 row who-guidelines-container ">
@@ -429,13 +463,13 @@
                     <div class="article-container text-justify p-3">
                         <p>The COVID-19 virus affects different people in different ways.  COVID-19 is a respiratory disease and most infected people will develop mild to moderate symptoms and recover without requiring special treatment.  People who have underlying medical conditions and those over 60 years old have a higher risk of developing severe disease and death.</p>
                         <p>Common symptoms include:</p>
-                        <ul>
+                        <ul  class="pl-5">
                             <li>fever</li>
                             <li>tiredness</li>
                             <li>dry cough</li>
                         </ul>
                         <p>Other symptoms include:</p>
-                        <ul>
+                        <ul  class="pl-5">
                             <li>shortness of breath</li>
                             <li>aches and pains</li>
                             <li>sore throat</li>
@@ -449,7 +483,7 @@
                     <div class="bg-clouds header">Prevention</div>
                     <div class="article-container text-justify p-3">
                         <p>To prevent infection and to slow transmission of COVID-19, do the following:</p>
-                        <ul>
+                        <ul  class="pl-5">
                             <li>Wash your hands regularly with soap and water, or clean them with alcohol-based hand rub.</li>
                             <li>Maintain at least 1 metre distance between you and people coughing or sneezing.</li>
                             <li>Avoid touching your face.</li>
@@ -464,14 +498,13 @@
                     <p class="text-center"><small> Source - <a href="https://www.who.int/health-topics/coronavirus#tab=tab_3" target="_blank">WHO</a></small></p>
              </div>
             </div>
-            <!-- Appeal -->
-            <!-- <div class="col-lg-12 header bg-clouds" id="st"><span class="translate-st"> </span></div>
-            <div class="col-lg-12 text-center no-padding">
-                <div class="jumbotron jumbotron-fluid no-margin">
-                    <div class="container p-4">
-                        <h1 class="translate-take-care-stay-safe">ध्यान रखें, सुरक्षित रहें</h1>
-                    </div>
-                </div>
+
+            <!-- patient info -->
+            <!-- <div class="col-lg-12 header bg-clouds" id=""><span class="">Last 20 Patients</div>
+            <div class="container">
+            <div class="card-carousel">
+            </div>
+            <a href="#" class="visuallyhidden card-controller">Carousel controller</a>
             </div> -->
 
             <!-- facebook comment plugin -->
@@ -489,7 +522,7 @@
                     </a>
                 </div> -->
                 <!-- footer for apps -->
-                <div class="pt-5 pr-2 pb-5 pl-2 m-1 mb-3 text-white text-center">
+                <div class="col-lg-12 common-footer-container bg-dark">
                     &copy; 
                     <span id="thisYear"></span> 
                     <a href="https://www.rajchandra.me" target="_blank" class="text-primary">Raj Chandra</a>. All Rights Reserved. <br>
@@ -508,5 +541,9 @@
 
     <script type="module" src="./src/js/index.js"></script>
     <script type="module" src="./src/js/ui/translation/translate.js"></script>
+    <!-- <script src="./src/js/ui/components/patient_card.js"></script> -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script type="module" src="https://files.rajchandra.me/js/config.js"></script>
+    <script type="text/javascript" src="https://files.rajchandra.me/js/footer.js"></script>
 </body>
 </html>
